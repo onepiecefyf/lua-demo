@@ -5,21 +5,19 @@
 ---
 
 
-
-require("resty.redis")
-
+local mysql_driver = require "luasql.mysql"
 
 --- 创建环境对象
-env = luasql.mysql
+env = mysql_driver:mysql()
 
 --- 连接数据库
-conn = env.connect("数据库名","用户名","密码","IP地址",端口)
+conn = env:connect("test","root","HA@bjca#01","192.168.16.4",3306)
 
 --- 设置数据库的编码格式
 conn:execute"SET NAMES UTF8"
 
 --- 执行数据库操作
-cur = conn:execute("select * from role")
+cur = conn:execute("select * from student_tbl")
 
 row = cur:fetch({},"a")
 
